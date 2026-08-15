@@ -258,7 +258,7 @@ function AdsBanner() {
     <div className="my-6 p-4 glass rounded-2xl text-center text-gray-500 text-sm">
       <ins className="adsbygoogle"
         style={{ display: 'block' }}
-        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+        data-ad-client="ca-pub-6339293652679456"
         data-ad-slot="1234567890"
         data-ad-format="auto"></ins>
       <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
