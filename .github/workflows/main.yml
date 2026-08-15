@@ -1,11 +1,9 @@
-
 name: Deploy EasyUnitex to GitHub Pages
 
 on:
   push:
     branches:
       - main
-
   workflow_dispatch:
 
 permissions:
@@ -34,7 +32,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Fix executable permission for Vite on Linux
       - name: Fix Vite permissions
         run: chmod +x node_modules/.bin/vite
 
@@ -61,4 +58,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-```
