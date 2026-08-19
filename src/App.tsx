@@ -258,7 +258,7 @@ function AdsBanner() {
     <div className="my-6 p-4 glass rounded-2xl text-center text-gray-500 text-sm">
       <ins className="adsbygoogle"
         style={{ display: 'block' }}
-        data-ad-client="ca-pub-6339293652679456"
+        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
         data-ad-slot="1234567890"
         data-ad-format="auto"></ins>
       <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
@@ -413,8 +413,8 @@ function Footer() {
         <div>
           <h4 className="font-semibold mb-2">Legal</h4>
           <ul className="space-y-1">
-            <li><a href="#">Privacy</a></li>
-            <li><a href="#">Terms</a></li>
+            <li><Link to="/privacy-policy">Privacy Policy</Link></li>
+            <li><a href="#">Terms of Service</a></li>
           </ul>
         </div>
         <div>
@@ -537,7 +537,6 @@ function CurrencyPage() {
         </div>
       </div>
       
-      {/* New display format */}
       <div className="glass p-4 rounded-xl flex items-center justify-between">
         <div>
           <p className="text-2xl font-mono font-semibold">{amount} {from}</p>
@@ -564,7 +563,7 @@ function CurrencyPage() {
   )
 }
 
-// ===================== UNIT CATEGORY PAGE (ALL CONVERTERS IN ONE PLACE) =====================
+// ===================== UNIT CATEGORY PAGE =====================
 function UnitCategoryPage() {
   const { addRecent } = useUserData()
   const [selectedCategory, setSelectedCategory] = useState('length')
@@ -607,7 +606,6 @@ function UnitCategoryPage() {
         <p className="text-gray-600 dark:text-gray-400 mt-2">Select a converter type below</p>
       </div>
       
-      {/* Converter Type Selector */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
         {unitCategories.map(unit => (
           <button
@@ -625,7 +623,6 @@ function UnitCategoryPage() {
         ))}
       </div>
       
-      {/* Active Converter */}
       <div className="glass p-6 rounded-2xl">
         <div className="flex items-center gap-3 mb-6">
           <span className="text-3xl">{currentCategory.icon}</span>
@@ -676,7 +673,6 @@ function UnitCategoryPage() {
             </div>
           </div>
           
-          {/* New display format: 1 Inch → 2.5400 Centimeter */}
           <div className="mt-6 glass p-4 rounded-xl flex items-center justify-between">
             <div>
               <p className="text-2xl font-mono font-semibold">{value} {fromUnit}</p>
@@ -695,7 +691,6 @@ function UnitCategoryPage() {
         </div>
       </div>
       
-      {/* All Converters Grid */}
       <div>
         <h2 className="text-2xl font-bold mb-4">All Available Converters</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -724,7 +719,6 @@ function UnitCategoryPage() {
   )
 }
 
-// Individual Unit Page (for direct URL access)
 function UnitPage() {
   const { category } = useParams<{ category: string }>()
   const cat = category || 'length'
@@ -753,7 +747,6 @@ function UnitPage() {
         </div>
       </div>
       
-      {/* New display format */}
       <div className="glass p-4 rounded-xl flex items-center justify-between">
         <div>
           <p className="text-2xl font-mono font-semibold">{value} {fromUnit}</p>
@@ -960,6 +953,120 @@ function ScientificCalc() {
   return <div><input value={expr} onChange={e=>setExpr(e.target.value)} className="w-full bg-transparent border-b p-2" placeholder="e.g., Math.sin(Math.PI/2)" /><button onClick={()=>{ try { setResult(eval(expr).toString()) } catch { setResult('Error') }}} className="mt-3 bg-primary text-white px-4 py-2 rounded-xl">Calculate</button><p className="mt-4 text-xl">{result}</p></div>
 }
 
+function PrivacyPolicyPage() {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+  
+  return (
+    <div className="max-w-3xl mx-auto space-y-8 py-8">
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold mb-2">Privacy Policy</h1>
+        <p className="text-gray-500 dark:text-gray-400">Last updated: February 2026</p>
+      </div>
+      
+      <div className="glass p-6 rounded-2xl space-y-6">
+        <section>
+          <h2 className="text-xl font-bold mb-3">1. Introduction</h2>
+          <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+            Welcome to EasyunitEX ("we," "our," or "us"). We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website and services.
+          </p>
+        </section>
+        
+        <section>
+          <h2 className="text-xl font-bold mb-3">2. Information We Collect</h2>
+          <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-3">
+            We collect information that you voluntarily provide to us when using our services:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400">
+            <li>Usage data (pages visited, tools used, time spent)</li>
+            <li>Device information (browser type, operating system)</li>
+            <li>IP address and general location data</li>
+            <li>Cookies and similar tracking technologies</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h2 className="text-xl font-bold mb-3">3. How We Use Your Information</h2>
+          <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-3">
+            We use the collected information for:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400">
+            <li>Providing, maintaining, and improving our services</li>
+            <li>Understanding how users interact with our tools</li>
+            <li>Displaying relevant advertisements</li>
+            <li>Ensuring the security and integrity of our platform</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h2 className="text-xl font-bold mb-3">4. Cookies and Tracking Technologies</h2>
+          <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+            We use cookies and similar tracking technologies to enhance your experience. You can control cookies through your browser settings. We may use Google Analytics and Google AdSense, which have their own privacy policies.
+          </p>
+        </section>
+        
+        <section>
+          <h2 className="text-xl font-bold mb-3">5. Third-Party Services</h2>
+          <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-3">
+            We may share your information with third-party service providers:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400">
+            <li>Google Analytics (analytics)</li>
+            <li>Google AdSense (advertising)</li>
+            <li>Currency exchange rate APIs</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h2 className="text-xl font-bold mb-3">6. Data Security</h2>
+          <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+            We implement appropriate technical and organizational security measures to protect your personal information. However, no method of transmission over the Internet is 100% secure.
+          </p>
+        </section>
+        
+        <section>
+          <h2 className="text-xl font-bold mb-3">7. Children's Privacy</h2>
+          <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+            Our services are not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13.
+          </p>
+        </section>
+        
+        <section>
+          <h2 className="text-xl font-bold mb-3">8. Your Rights</h2>
+          <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-3">
+            You have the right to:
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400">
+            <li>Access your personal data</li>
+            <li>Request correction or deletion of your data</li>
+            <li>Object to processing of your data</li>
+            <li>Withdraw consent at any time</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h2 className="text-xl font-bold mb-3">9. Changes to This Privacy Policy</h2>
+          <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+            We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.
+          </p>
+        </section>
+        
+        <section>
+          <h2 className="text-xl font-bold mb-3">10. Contact Us</h2>
+          <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+            If you have any questions about this Privacy Policy, please contact us at:
+          </p>
+          <p className="text-gray-600 dark:text-gray-400 mt-2">
+            <strong>Ghost Network</strong><br />
+            Email: support@easyunitex.com
+          </p>
+        </section>
+      </div>
+    </div>
+  )
+}
+
 function NotFound() {
   return <div className="text-center py-20"><h1 className="text-6xl font-bold text-gray-300">404</h1><p className="text-xl mt-4">Page not found</p><Link to="/" className="mt-6 inline-block bg-primary text-white px-6 py-3 rounded-xl">Go Home</Link></div>
 }
@@ -999,6 +1106,7 @@ export default function App() {
               <Route path="number-system" element={<NumberSystemPage />} />
               <Route path="developer" element={<DeveloperPage />} />
               <Route path="student" element={<StudentPage />} />
+              <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
