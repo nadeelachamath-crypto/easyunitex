@@ -252,18 +252,114 @@ function useCurrencyRates() {
   })
 }
 
-// ===================== REUSABLE COMPONENTS =====================
+// ===================== AD BANNER (468x60) =====================
 function AdsBanner() {
+  const adContainerRef = useRef<HTMLDivElement>(null)
+  
+  useEffect(() => {
+    const container = adContainerRef.current
+    if (container && !container.innerHTML.trim()) {
+      const optionsScript = document.createElement('script')
+      optionsScript.textContent = `
+        atOptions = {
+          'key' : '80f541a56a93d9670e591d571fa7c1f3',
+          'format' : 'iframe',
+          'height' : 60,
+          'width' : 468,
+          'params' : {}
+        };
+      `
+      const invokeScript = document.createElement('script')
+      invokeScript.src = 'https://www.highperformanceformat.com/80f541a56a93d9670e591d571fa7c1f3/invoke.js'
+      invokeScript.async = true
+      
+      container.appendChild(optionsScript)
+      container.appendChild(invokeScript)
+    }
+  }, [])
+  
   return (
-    <div className="my-6 p-4 glass rounded-2xl text-center text-gray-500 text-sm">
-      <ins className="adsbygoogle"
-        style={{ display: 'block' }}
-        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-        data-ad-slot="1234567890"
-        data-ad-format="auto"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-      <p className="mt-1">Advertisement</p>
+    <div className="w-full max-w-lg mx-auto my-4 px-4">
+      <div className="glass rounded-2xl p-3">
+        <div className="text-center">
+          <p className="text-xs text-gray-400 dark:text-gray-500 mb-1">Advertisement</p>
+          <div ref={adContainerRef} className="flex items-center justify-center min-h-[60px] min-w-[468px] overflow-hidden">
+            {/* Ad loads dynamically */}
+          </div>
+        </div>
+      </div>
     </div>
+  )
+}
+
+// ===================== WELCOME POPUP =====================
+function WelcomePopup() {
+  const [isOpen, setIsOpen] = useState(false)
+  
+  useEffect(() => {
+    const popupShown = sessionStorage.getItem('easyunitex_popup_shown')
+    if (!popupShown) {
+      const timer = setTimeout(() => {
+        setIsOpen(true)
+        sessionStorage.setItem('easyunitex_popup_shown', 'true')
+      }, 2000)
+      return () => clearTimeout(timer)
+    }
+  }, [])
+  
+  const handleClose = () => {
+    setIsOpen(false)
+    const adNetworkUrl = 'https://www.effectivecpmnetwork.com/qjrryies83?key=894306db392302b3e7161e6e0738f1dd'
+    window.open(adNetworkUrl, '_blank')
+  }
+  
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            className="glass w-full max-w-md rounded-2xl p-8 relative"
+          >
+            <button
+              onClick={handleClose}
+              className="absolute top-4 right-4 p-2 rounded-full hover:bg-white/40 dark:hover:bg-gray-800/40 transition"
+              aria-label="Close popup"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            <div className="text-center space-y-4">
+              <div className="text-5xl mb-4">👋</div>
+              <h2 className="text-xl font-bold">Welcome to EasyunitEX</h2>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                This is fast and simple unit converter without annoying ads. Closing this, only one ad will play in another tab. Close it and do your work on EasyunitEX.
+              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-500">
+                Thank you for the visit EasyunitEX
+              </p>
+              
+              <button
+                onClick={handleClose}
+                className="w-full bg-primary hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition"
+              >
+                Close & Continue
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   )
 }
 
@@ -438,8 +534,13 @@ function Layout() {
   }, [])
   return (
     <div className="min-h-screen flex flex-col">
+      <WelcomePopup />
       <Navbar onSearchOpen={() => setSearchOpen(true)} />
       <Breadcrumb />
+      
+      {/* Banner Ad - Shows on every page */}
+      <AdsBanner />
+      
       <main className="flex-1 container mx-auto px-4 py-8">
         <AnimatePresence mode="wait">
           <motion.div key={location.pathname} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
@@ -467,13 +568,14 @@ function HomePage() {
         <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-8">Convert anything, format code, generate data – all from a beautiful, blazing-fast interface.</p>
         <Link to="/currency" className="inline-block bg-primary hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-xl transition">Start Converting</Link>
       </section>
-      <AdsBanner />
+      
       <section>
         <h2 className="text-2xl font-bold mb-6">Categories</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {categories.map(cat => <ToolCard key={cat.slug} title={cat.title} desc={cat.desc} icon={cat.icon} slug={cat.slug} />)}
         </div>
       </section>
+      
       <section>
         <h2 className="text-2xl font-bold mb-6">Popular Tools</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -484,6 +586,7 @@ function HomePage() {
           ))}
         </div>
       </section>
+      
       {recentTools.length > 0 && (
         <section>
           <h2 className="text-2xl font-bold mb-6">Recently Used</h2>
@@ -496,6 +599,7 @@ function HomePage() {
           </div>
         </section>
       )}
+      
       <section className="text-center py-12 glass rounded-2xl">
         <h2 className="text-2xl font-bold mb-4">Ready to simplify your workflow?</h2>
         <p className="text-gray-600 dark:text-gray-400 mb-4">Developed by Ghost Network</p>
@@ -557,7 +661,6 @@ function CurrencyPage() {
         <h2 className="text-lg font-semibold mb-4">Exchange Rate Trend</h2>
         <Line data={{ labels: ['Jan','Feb','Mar','Apr','May'], datasets: [{ label: `${from}/${to}`, data: [converted*0.9, converted*1.1, converted, converted*0.95, converted*1.05], borderColor: '#2563EB', backgroundColor: 'rgba(37,99,235,0.2)' }] }} />
       </div>
-      <AdsBanner />
       <Toast message="Currencies swapped!" show={swapToast} />
     </div>
   )
